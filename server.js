@@ -4,22 +4,19 @@ const cors = require('cors');
 
 const app = express();
 
-// Middlewares
-app.use(cors()); // Frontend se request accept karne ke liye
-app.use(express.json()); // JSON data read karne ke liye
+app.use(cors()); 
+app.use(express.json()); 
 
 // ==========================================
-// MONGODB CONNECTION (With Your Password)
+// 1. UPDATE THIS URL WITH YOUR NEW PASSWORD
 // ==========================================
-const MONGO_URL = "mongodb+srv://aarifkhanpatilar_db_user:JT6FQLhYsVaz5qdy@cluster0.zl55c9u.mongodb.net/collegeERP?retryWrites=true&w=majority";
+// Yahan 'JT6FQLhYsVaz5qdy' ki jagah apna naya banaya hua password dalein
+const MONGO_URL = "mongodb+srv://aarifkhanpatilar_db_user:APNA_NAYA_PASSWORD_YAHAN_DALEIN@cluster0.zl55c9u.mongodb.net/collegeERP?retryWrites=true&w=majority";
 
 mongoose.connect(MONGO_URL)
     .then(() => console.log("✅ MongoDB Successfully Connected!"))
     .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
-// ==========================================
-// MONGOOSE SCHEMA & MODEL
-// ==========================================
 const studentSchema = new mongoose.Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
@@ -35,16 +32,10 @@ const studentSchema = new mongoose.Schema({
 
 const Student = mongoose.model('Student', studentSchema);
 
-// ==========================================
-// API ROUTES
-// ==========================================
-
-// Test Route
 app.get('/', (req, res) => {
     res.send("College ERP Backend is Running Successfully!");
 });
 
-// Student Admission Submit API
 app.post('/api/admission', async (req, res) => {
     try {
         const newStudent = new Student(req.body);
@@ -66,9 +57,9 @@ app.post('/api/admission', async (req, res) => {
 });
 
 // ==========================================
-// SERVER START
+// 2. IMPORTANT PORT CHANGE FOR RENDER
 // ==========================================
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`🚀 Server is live on http://localhost:${PORT}`);
+    console.log(`🚀 Server is live on port ${PORT}`);
 });
