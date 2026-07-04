@@ -1,16 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path'); // Naya: File path read karne ke liye
 
 const app = express();
 
 app.use(cors()); 
 app.use(express.json()); 
+app.use(express.static(__dirname)); // Naya: Agar future me CSS/JS file alag karni ho toh error na aaye
 
 // ==========================================
 // 1. UPDATE THIS URL WITH YOUR NEW PASSWORD
 // ==========================================
-// Yahan 'JT6FQLhYsVaz5qdy' ki jagah apna naya banaya hua password dalein
+// DHYAN DEIN: 'APNA_NAYA_PASSWORD_YAHAN_DALEIN' ki jagah apna asali password likhna mat bhoolna
 const MONGO_URL = "mongodb+srv://aarifkhanpatilar_db_user:APNA_NAYA_PASSWORD_YAHAN_DALEIN@cluster0.zl55c9u.mongodb.net/collegeERP?retryWrites=true&w=majority";
 
 mongoose.connect(MONGO_URL)
@@ -32,10 +34,16 @@ const studentSchema = new mongoose.Schema({
 
 const Student = mongoose.model('Student', studentSchema);
 
+// ==========================================
+// API ROUTES
+// ==========================================
+
+// Yahan change kiya hai: Ab text nahi, index.html file bhejega
 app.get('/', (req, res) => {
-    res.send("College ERP Backend is Running Successfully!");
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// Student Admission Submit API
 app.post('/api/admission', async (req, res) => {
     try {
         const newStudent = new Student(req.body);
