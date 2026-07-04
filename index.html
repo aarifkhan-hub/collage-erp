@@ -179,34 +179,47 @@
     </div>
 
     <script>
-        /* ========== UPDATED INTERNAL JAVASCRIPT ========== */
+        /* ========== SIMPLIFIED JAVASCRIPT ========== */
         document.getElementById('admissionForm').addEventListener('submit', async function(event) {
+            // 1. Page ko refresh hone se rokein
             event.preventDefault();
 
-            const formData = new FormData(this);
-            const studentData = {};
-            
-            formData.forEach((value, key) => {
-                studentData[key] = value;
-            });
+            // 2. Ek normal JavaScript Object banayein aur usme ek-ek karke values daalein
+            const studentData = {
+                firstName: document.getElementById('firstName').value,
+                lastName:  document.getElementById('lastName').value,
+                dob:       document.getElementById('dob').value,
+                gender:    document.getElementById('gender').value,
+                email:     document.getElementById('email').value,
+                phone:     document.getElementById('phone').value,
+                course:    document.getElementById('course').value,
+                prevMarks: document.getElementById('prevMarks').value,
+                address:   document.getElementById('address').value
+            };
 
-            console.log("Sending Data to Database:", studentData);
+            console.log("Raw Object Data:", studentData);
+
+            // 3. Object ko JSON string mein convert karein
+            const jsonData = JSON.stringify(studentData);
+            
+            console.log("JSON Data for Backend:", jsonData);
 
             try {
-                // YAHAN CHANGE KIYA HAI: Pura URL hatakar sirf '/api/admission' kar diya hai
+                // 4. JSON data ko backend par bhejein
                 const response = await fetch('/api/admission', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(studentData) 
+                    body: jsonData // Yahan direct JSON bhej rahe hain
                 });
 
+                // Server ka reply check karein
                 const result = await response.json();
 
                 if (response.ok) {
                     alert("Success: " + result.message);
-                    this.reset(); 
+                    this.reset(); // Form clear karein
                 } else {
                     alert("Error: " + result.message);
                 }
