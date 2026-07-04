@@ -1,19 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const path = require('path'); // Naya: File path read karne ke liye
+const path = require('path'); // File path read karne ke liye
 
 const app = express();
 
 app.use(cors()); 
 app.use(express.json()); 
-app.use(express.static(__dirname)); // Naya: Agar future me CSS/JS file alag karni ho toh error na aaye
+app.use(express.static(__dirname)); // Agar future me CSS/JS file alag karni ho toh error na aaye
 
 // ==========================================
-// 1. UPDATE THIS URL WITH YOUR NEW PASSWORD
+// 1. UPDATED MONGODB URL WITH NEW PASSWORD
 // ==========================================
-// DHYAN DEIN: 'APNA_NAYA_PASSWORD_YAHAN_DALEIN' ki jagah apna asali password likhna mat bhoolna
-const MONGO_URL = "mongodb+srv://aarifkhanpatilar_db_user:JT6FQLhYsVaz5qdy@cluster0.zl55c9u.mongodb.net/collegeERP?retryWrites=true&w=majority";
+const MONGO_URL = "mongodb+srv://aarifkhanpatilar_db_user:qK0OXPms4huWXZiw@cluster0.zl55c9u.mongodb.net/collegeERP?retryWrites=true&w=majority";
 
 mongoose.connect(MONGO_URL)
     .then(() => console.log("✅ MongoDB Successfully Connected!"))
@@ -38,7 +37,7 @@ const Student = mongoose.model('Student', studentSchema);
 // API ROUTES
 // ==========================================
 
-// Yahan change kiya hai: Ab text nahi, index.html file bhejega
+// Ab text nahi, index.html file bhejega
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
