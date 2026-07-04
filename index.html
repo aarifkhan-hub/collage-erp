@@ -48,7 +48,8 @@
         }
 
         .form-row .form-group {
-            margin-bottom: 0; /* Clear margin for flex rows */
+            margin-bottom: 0;
+ /* Clear margin for flex rows */
         }
 
         label {
@@ -179,13 +180,10 @@
     </div>
 
     <script>
-        /* ========== UPDATED INTERNAL JAVASCRIPT (WITH BACKEND CONNECTION) ========== */
-        // Yahan async function use kiya hai kyunki hum server se baat karenge
+        /* ========== UPDATED INTERNAL JAVASCRIPT (WITH LIVE RENDER BACKEND) ========== */
         document.getElementById('admissionForm').addEventListener('submit', async function(event) {
-            // Form ko refresh hone se rokne ke liye
             event.preventDefault();
 
-            // Form ka data collect karna
             const formData = new FormData(this);
             const studentData = {};
             
@@ -193,34 +191,30 @@
                 studentData[key] = value;
             });
 
-            console.log("Sending Data to Backend:", studentData);
+            console.log("Sending Data to Live Backend:", studentData);
 
             try {
-                // Fetch API ka use karke Node.js server par POST request bhejna
-                const response = await fetch('http://localhost:5000/api/admission', {
+                // Fetch API URL ab Render ke live server ko point kar raha hai
+                const response = await fetch('https://collage-erp-ka1e.onrender.com/api/admission', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(studentData) // Data ko JSON mein convert karna
+                    body: JSON.stringify(studentData) 
                 });
 
-                // Server ka response read karna
                 const result = await response.json();
 
                 if (response.ok) {
-                    // Agar admission successful ho gaya
                     alert("Success: " + result.message);
-                    this.reset(); // Form ko khaali (reset) karna
+                    this.reset(); 
                 } else {
-                    // Agar server side se koi error aayi (jaise email pehle se exist karta ho)
                     alert("Error: " + result.message);
                 }
 
             } catch (error) {
                 console.error("Fetch Error:", error);
-                // Agar Node.js server band ho ya network issue ho
-                alert("Server se connect nahi ho paya. Kripya dhyan dein ki aapka backend (node server.js) chal raha hai.");
+                alert("Live server se connect nahi ho paya. Kripya check karein ki Render par backend successfully run ho raha hai.");
             }
         });
     </script>
