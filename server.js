@@ -13,7 +13,7 @@ app.use(express.static(__dirname)); // Naya: Agar future me CSS/JS file alag kar
 // 1. UPDATE THIS URL WITH YOUR NEW PASSWORD
 // ==========================================
 // DHYAN DEIN: 'APNA_NAYA_PASSWORD_YAHAN_DALEIN' ki jagah apna asali password likhna mat bhoolna
-const MONGO_URL = "mongodb+srv://aarifkhanpatilar_db_user:APNA_NAYA_PASSWORD_YAHAN_DALEIN@cluster0.zl55c9u.mongodb.net/collegeERP?retryWrites=true&w=majority";
+const MONGO_URL = "mongodb+srv://aarifkhanpatilar_db_user:JT6FQLhYsVaz5qdy@cluster0.zl55c9u.mongodb.net/collegeERP?retryWrites=true&w=majority";
 
 mongoose.connect(MONGO_URL)
     .then(() => console.log("✅ MongoDB Successfully Connected!"))
